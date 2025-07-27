@@ -143,9 +143,9 @@ body {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;
+    width: 200px;
     /* 下線の長さ */
-    height: 6px;
+    height: 5px;
     /* 下線の太さ */
     background-color: #29B6F6;
     /* 明るい青の下線 */
@@ -319,5 +319,228 @@ body {
 
     .section-title {
         font-size: 1.6em;
+    }
+}
+
+/* --- JavaScriptの基本構文セクション用スタイル --- */
+
+.syntax-section {
+    /* content-sectionのスタイルが継承されるため、特別な指定は少なめ */
+}
+
+.syntax-item {
+    background-color: #F8F8F8;
+    /* 各構文ブロックの背景色 */
+    border-left: 5px solid #00BCD4;
+    /* 左側に青いボーダー */
+    padding: 25px;
+    margin-bottom: 35px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    /* 軽い影 */
+}
+
+.syntax-item h3 {
+    color: #0D47A1;
+    /* 各項目見出しの色 */
+    font-size: 1.6em;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #BBDEFB;
+    /* 点線の区切り線 */
+}
+
+.syntax-item p {
+    font-size: 1.05em;
+    margin-bottom: 15px;
+    line-height: 1.7;
+    text-align: left;
+    /* テキストは左寄せ */
+}
+
+.code-example {
+    background-color: #2D2D2D;
+    /* コードブロックの背景色 */
+    color: #F8F8F2;
+    /* コードの文字色 */
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    /* コードが長い場合に横スクロールできるように */
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    /* 等幅フォント */
+    font-size: 0.95em;
+    line-height: 1.4;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #1A237E;
+    /* 濃い青のボーダー */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    /* 内側の影 */
+}
+
+.code-example pre {
+    margin: 0;
+    padding: 0;
+}
+
+.code-example code {
+    /* シンタックスハイライトの色はここで指定するとより詳細に制御できますが、
+       今回はシンプルに背景色と文字色のみで対応します */
+}
+
+/* コード内のコメントの色 */
+.code-example code span.comment {
+    color: #75715E;
+    /* コメントアウトの色 */
+}
+
+/* コード内の文字列の色 */
+.code-example code span.string {
+    color: #E6DB74;
+    /* 文字列の色 */
+}
+
+/* コード内のキーワード（var, let, const, functionなど）の色 */
+.code-example code span.keyword {
+    color: #F92672;
+    /* キーワードの色 */
+}
+
+/* コード内の数値の色 */
+.code-example code span.number {
+    color: #AE81FF;
+    /* 数値の色 */
+}
+
+/* --- レスポンシブ対応の調整 --- */
+@media (max-width: 768px) {
+    .syntax-item {
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+
+    .syntax-item h3 {
+        font-size: 1.4em;
+    }
+
+    .code-example {
+        padding: 15px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .syntax-item {
+        padding: 15px;
+    }
+
+    .syntax-item h3 {
+        font-size: 1.2em;
+    }
+
+    .syntax-item p {
+        font-size: 0.95em;
+    }
+
+    .code-example {
+        font-size: 0.85em;
+        padding: 10px;
+    }
+}
+
+/* --- ゲームセクション用スタイル --- */
+.game-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    /* ゲームセクションの最低高さを確保 */
+    background-color: #E0F7FA;
+    /* ゲームセクションの背景色を明るい青に */
+    border: 3px solid #00BCD4;
+    /* シアン系のボーダーで強調 */
+}
+
+.game-instruction {
+    font-size: 1.1em;
+    text-align: center;
+    margin-top: 20px;
+    color: #455A64;
+}
+
+#game-container {
+    width: 700px;
+    /* ゲームエリアの幅 */
+    height: 200px;
+    /* ゲームエリアの高さ */
+    border: 3px solid #0D47A1;
+    /* 濃い青のボーダー */
+    background-color: #BBDEFB;
+    /* ゲームフィールドの背景色 */
+    position: relative;
+    /* 子要素を絶対配置するための基準 */
+    overflow: hidden;
+    /* はみ出た要素を隠す */
+    border-radius: 10px;
+    /* 角を丸くする */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    /* 影 */
+    margin-top: 30px;
+}
+
+#ground {
+    width: 200%;
+    /* 地面をゲームコンテナの2倍の幅にする（アニメーション用） */
+    height: 20px;
+    /* 地面の高さ */
+    background: repeating-linear-gradient(-45deg,
+            #607D8B,
+            /* 濃いグレー */
+            #607D8B 10px,
+            #78909C 10px,
+            /* 少し明るいグレー */
+            #78909C 20px);
+    /* 地面にストライプ模様 */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    /* 初期位置 */
+    animation: scrollGround 5s linear infinite;
+    /* アニメーションを適用 */
+}
+
+/* 地面をスクロールさせるアニメーション */
+@keyframes scrollGround {
+    0% {
+        transform: translateX(0);
+        /* 最初は0%の位置 */
+    }
+
+    100% {
+        transform: translateX(-50%);
+        /* 幅の半分だけ左に移動 */
+    }
+}
+
+/* --- レスポンシブ対応の調整 --- */
+@media (max-width: 768px) {
+    #game-container {
+        width: 90%;
+        /* 小画面では幅を調整 */
+        height: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    #game-container {
+        width: 95%;
+        height: 150px;
+    }
+
+    .game-instruction {
+        font-size: 0.95em;
     }
 }
