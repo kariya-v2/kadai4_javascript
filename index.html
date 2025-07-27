@@ -16,35 +16,15 @@
             <h1 class="site-title">
                 <span class="icon-dino">🦖</span> Let's make T-Rex game <span class="icon-cactus">🌵</span>
             </h1>
-            <p class="site-tagline">楽しみながら学ぶ、ウェブブラウザゲーム開発の第一歩</p>
         </div>
     </header>
 
     <main class="main-content">
         <section id="introduction" class="content-section intro-section">
             <h2 class="section-title">誰もがしたことがあるあのゲーム</h2>
-            <p>このサイトでは、<strong>JavaScript</strong>を使って、みんなが一度はしたことがあるだろう恐竜ゲームを作成します。</p>
+            <p>このサイトでは、<strong>JavaScript</strong>を使って、みんなが一度はしたことがあるだろう恐竜ゲームを再現します。</p>
             <p>やったことがない人は一度オフラインにして、実際にプレイしてみてください。</p>
             <p class="call-to-action">では、早速始めてみましょう！</p>
-        </section>
-
-        <section id="why-this-game" class="content-section feature-section">
-            <h2 class="section-title">1. JavaScriptの基礎</h2>
-            <p>まずはJavaScriptの基本を理解することから始めましょう。</p>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h3>実践的な学習</h3>
-                    <p>DOM操作、イベント処理、アニメーション、衝突判定といったウェブ開発の<strong>主要な要素</strong>を網羅できます。</p>
-                </div>
-                <div class="feature-item">
-                    <h3>オフラインでも楽しめる</h3>
-                    <p>インターネット接続がなくても動作するため、場所を選ばずに<strong>いつでも学習・開発</strong>を進められます。</p>
-                </div>
-                <div class="feature-item">
-                    <h3>目に見える成果</h3>
-                    <p>コードが直接ゲームの動きに反映されるので、<strong>学習のモチベーション</strong>が維持しやすいです。</p>
-                </div>
-            </div>
         </section>
 
         <section id="basic-syntax" class="content-section syntax-section">
@@ -260,121 +240,537 @@
         </section>
 
         <section id="dino-game" class="content-section game-section">
-            <h2 class="section-title">恐竜ゲームを作ってみよう！</h2>
-            <p>さあ、いよいよJavaScriptを使って、Chromeのオフライン恐竜ゲームのようなシンプルなゲームを作成します。しかし、最初はCSSを使ってゲームの舞台となる背景（地面）から作り始めましょう。</p>
+            <h2 class="section-title">ゲームの背景を作ろう！</h2>
+            <p>
+                ここでは<strong>ゲームの背景</strong>を作成します。<br>
+                ベージュ色のフィールドに赤い枠線、下部にはストライプ模様の地面がCSSアニメーションで横にスクロールします。<br>
+            </p>
             <div class="code-example">
                 <pre><code>
-        /* --- ゲームセクション用スタイル --- */
-        .game-section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 400px; /* ゲームセクションの最低高さを確保 */
-        background-color: #E0F7FA; /* ゲームセクションの背景色を明るい青に */
-        border: 3px solid #00BCD4; /* シアン系のボーダーで強調 */
+        #background-area {
+            width: 400px;
+            height: 150px;
+            margin: 20px auto;
+            position: relative;
+            background: #fff3e0; /* ベージュ色の背景 */
+            border: 2px solid #E53935; /* 赤い枠線 */
+            overflow: hidden;
         }
-        
-        .game-instruction {
-        font-size: 1.1em;
-        text-align: center;
-        margin-top: 20px;
-        color: #455A64;
-        }
-        
-        #game-container {
-        width: 700px; /* ゲームエリアの幅 */
-        height: 200px; /* ゲームエリアの高さ */
-        border: 3px solid #0D47A1; /* 濃い青のボーダー */
-        background-color: #BBDEFB; /* ゲームフィールドの背景色 */
-        position: relative; /* 子要素を絶対配置するための基準 */
-        overflow: hidden; /* はみ出た要素を隠す */
-        border-radius: 10px; /* 角を丸くする */
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* 影 */
-        margin-top: 30px;
-        }
-        
-        #ground {
-        width: 200%; /* 地面をゲームコンテナの2倍の幅にする（アニメーション用） */
-        height: 20px; /* 地面の高さ */
-        background: repeating-linear-gradient(
-        -45deg,
-        #607D8B, /* 濃いグレー */
-        #607D8B 10px,
-        #78909C 10px, /* 少し明るいグレー */
-        #78909C 20px
-        ); /* 地面にストライプ模様 */
-        position: absolute;
-        bottom: 0;
-        left: 0; /* 初期位置 */
-        animation: scrollGround 5s linear infinite; /* アニメーションを適用 */
-        }
-        
+            #background-ground {
+                width: 200%;
+                height: 20px;
+                background: repeating-linear-gradient(
+                    -45deg,
+                    #607D8B,
+                    #607D8B 10px,
+                    #78909C 10px,
+                    #78909C 20px
+                );
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                animation: scrollGround 5s linear infinite;
+                z-index: -1;
+            }
         /* 地面をスクロールさせるアニメーション */
         @keyframes scrollGround {
-        0% {
-        transform: translateX(0); /* 最初は0%の位置 */
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
-        100% {
-        transform: translateX(-50%); /* 幅の半分だけ左に移動 */
-        }
-        }
-        
-        /* --- レスポンシブ対応の調整 --- */
-        @media (max-width: 768px) {
-        #game-container {
-        width: 90%; /* 小画面では幅を調整 */
-        height: 180px;
-        }
-        }
-        
-        @media (max-width: 480px) {
-        #game-container {
-        width: 95%;
-        height: 150px;
-        }
-        .game-instruction {
-        font-size: 0.95em;
-        }
-        }
-                            </code></pre>
-            </div>
-
-            <div id="game-container">
-                <div id="ground"></div>
-                <!-- 今後、恐竜やサボテンなどの要素がここに追加されます -->
-            </div>
-
-            <p class="game-instruction">ゲームエリアが表示されました。これからここに恐竜や障害物を配置していきます。</p>
-        </section>
-
-        <section id="create-dino-js" class="content-section dino-section">
-            <h2 class="section-title">JavaScriptで恐竜キャラクターを表示しよう！</h2>
-            <p>ここでは、JavaScriptを使ってゲームエリアに恐竜キャラクターを追加する方法を紹介します。</p>
-            <div class="code-example">
-                <pre><code>
-// HTMLにscriptタグを追加
-&lt;script&gt;
-    // 恐竜要素を作成
-    const dino = document.createElement('div');
-    dino.id = 'dino';
-    dino.style.width = '40px';
-    dino.style.height = '40px';
-    dino.style.background = '#4CAF50';
-    dino.style.position = 'absolute';
-    dino.style.left = '50px';
-    dino.style.bottom = '20px';
-    dino.style.borderRadius = '8px 8px 12px 12px';
-    dino.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
-    // ゲームエリアに追加
-    document.getElementById('game-container').appendChild(dino);
-&lt;/script&gt;
                 </code></pre>
             </div>
-            <p>このコードを<code>&lt;/body&gt;</code>タグの直前に追加すると、ゲームエリアに恐竜が表示されます。</p>
-            <p>次は、キーボード操作でジャンプできるようにしてみましょう！</p>
+            <div id="background-area">
+                <div id="background-ground"></div>
+                <!-- ここにはキャラクターや障害物は配置しません（背景のみ） -->
+            </div>
+            <p class="game-instruction">
+                このように、CSSだけでゲームらしい背景と動く地面を表現できます。
+            </p>
         </section>
+
+        <section id="dog-jump" class="content-section">
+            <h2 class="section-title">キャラクターをジャンプさせよう！</h2>
+            <p>JavaScriptで恐竜の代わりに犬を使い、↑キーまたはスペースキーでジャンプ、↓キーでしゃがみができるようにします。</p>
+            
+            <!-- デモエリア -->
+            <div id="dog-demo-area" style="position:relative; width:300px; height:150px; border:2px solid #2196F3; background:#e3f2fd; margin:20px auto;"></div>
+            <script src="script.js"></script>
+            
+            <div class="code-example">
+                <pre><code>
+// JavaScript例
+demoArea.appendChild(dog);
+demoArea.appendChild(dog);
+// デモエリアの取得と画像要素の作成
+const demoArea = document.getElementById('dog-demo-area');
+const dog = document.createElement('img');
+dog.src = 'images/dog.png'; // 通常時の画像
+dog.id = 'dog';
+dog.style.position = 'absolute';
+dog.style.left = '30px';
+dog.style.bottom = '10px';
+dog.style.width = '60px';
+demoArea.appendChild(dog);
+
+// ジャンプ・しゃがみ用の変数
+let isJumping = false; // ジャンプ中かどうか
+let jumpHeight = 60;   // ジャンプの高さ
+let jumpSpeed = 4;     // ジャンプの速さ
+let dogBottom = 10;    // 現在の下端位置
+
+// ジャンプ処理
+function jump() {
+    if (isJumping) return; // 連続ジャンプ防止
+    isJumping = true;
+    let upInterval = setInterval(() => {
+        if (dogBottom < jumpHeight) {
+            dogBottom += jumpSpeed;
+            dog.style.bottom = dogBottom + 'px'; // 上昇
+        } else {
+            clearInterval(upInterval);
+            // 頂点に達したら下降処理
+            let downInterval = setInterval(() => {
+                if (dogBottom > 10) {
+                    dogBottom -= jumpSpeed;
+                    dog.style.bottom = dogBottom + 'px'; // 下降
+                } else {
+                    clearInterval(downInterval);
+                    isJumping = false; // 着地
+                }
+            }, 20);
+        }
+    }, 20);
+}
+
+// キー操作イベント
+document.addEventListener('keydown', function(e) {
+    // ↑キーまたはスペースでジャンプ
+    if (e.code === 'ArrowUp' || e.code === 'Space') {
+        jump();
+    }
+    // ↓キーでしゃがみ画像に変更
+    if (e.code === 'ArrowDown') {
+        dog.src = 'images/crouching_dog.png';
+    }
+});
+
+// ↓キーを離したら元の画像に戻す
+document.addEventListener('keyup', function(e) {
+    if (e.code === 'ArrowDown') {
+        dog.src = 'images/dog.png';
+    }
+});
+                </code></pre>
+            </div>
+            <p>↑キーまたはスペースキーでジャンプ、↓キーでしゃがみます。</p>
+        </section>
+
+        <section id="obstacle-animation" class="content-section">
+            <h2 class="section-title">障害物のアニメーションを作ろう！</h2>
+            <p>
+                サボテンは描画エリアの下から、プテラの代わりの矢はランダムな高さから、右端から左端へ移動します。<br>
+                どちらもランダムな間隔で出現しますが、画像を出現させた後は必ず1秒のインターバルを挟みます。
+            </p>
+            <!-- デモエリア -->
+            <div id="obstacle-demo-area" style="position:relative; width:400px; height:120px; border:2px solid #43A047; background:#f1f8e9; margin:20px auto; overflow:hidden;"></div>
+            <script src="script.js"></script>
+            <div class="code-example">
+                <pre><code>
+    // JavaScript例
+    const gameArea = document.getElementById('game-container');
+    
+    // サボテンを出現・移動させる関数
+    function spawnCactus() {
+    const cactus = document.createElement('img');
+    cactus.src = 'images/cactus.png';
+    cactus.className = 'cactus';
+    cactus.style.position = 'absolute';
+    cactus.style.bottom = '0px';
+    cactus.style.left = gameArea.offsetWidth + 'px';
+    cactus.style.width = '40px';
+    gameArea.appendChild(cactus);
+    
+    let pos = gameArea.offsetWidth;
+    const move = setInterval(() => {
+    pos -= 4;
+    cactus.style.left = pos + 'px';
+    if (pos < -40) { clearInterval(move); cactus.remove(); } }, 16); } // 矢を出現・移動させる関数 function spawnArrow() { const
+        arrow=document.createElement('img'); arrow.src='images/arrow.png' ; arrow.className='arrow' ;
+        arrow.style.position='absolute' ; // ランダムな高さ（地面から30px〜エリア上端まで） const randTop=Math.floor(Math.random() *
+        (gameArea.offsetHeight - 60)) + 30; arrow.style.top=randTop + 'px' ; arrow.style.left=gameArea.offsetWidth + 'px' ;
+        arrow.style.width='40px' ; gameArea.appendChild(arrow); let pos=gameArea.offsetWidth; const move=setInterval(()=> {
+        pos -= 6;
+        arrow.style.left = pos + 'px';
+        if (pos < -40) { clearInterval(move); arrow.remove(); } }, 16); } // ランダムな間隔で障害物を出現させる function startObstacles() {
+            function loop() { // サボテンか矢をランダムで選択 if (Math.random() < 0.5) { spawnCactus(); } else { spawnArrow(); } //次の出現までランダム（1〜2秒）＋必ず1秒インターバル 
+            const next=Math.random() * 1000 + 1000; setTimeout(loop, next); } loop(); }
+                </code></pre>
+            </div>
+            <p>
+                <strong>ポイント:</strong><br>
+                サボテンは地面から、矢はランダムな高さから出現します。<br>
+                <code>setTimeout</code>でランダムな間隔＋1秒インターバルを実現しています。<br>
+                <code>setInterval</code>で画像を左へ移動させ、画面外に出たら削除します。
+            </p>
+        </section>
+
+        <section id="gameover-section" class="content-section">
+            <h2 class="section-title">犬と障害物の当たり判定＆GAME OVERの実装（背景付き）</h2>
+            <p>
+                ここでは、今まで作成した「背景」「犬」「障害物（サボテン・矢）」を統合し、犬が障害物にぶつかったら「GAME OVER」と表示する仕組みを解説します。
+            </p>
+            <div id="game-demo-area"
+                style="position:relative; width:400px; height:150px; border:2px solid #E53935; background:#fff3e0; margin:20px auto; overflow:hidden;">
+                <!-- 背景 -->
+                <div
+                    style="position:absolute; bottom:0; left:0; width:100%; height:20px; background:repeating-linear-gradient(-45deg,#607D8B,#607D8B 10px,#78909C 10px,#78909C 20px);">
+                </div>
+                <!-- 犬と障害物はJavaScriptで追加 -->
+                <div id="gameover-message"
+                    style="display:none; position:absolute; top:40px; left:0; width:100%; text-align:center; font-size:2em; color:#E53935; font-weight:bold;">
+                    GAME OVER
+                </div>
+            </div>
+            <div class="code-example">
+                <pre><code>
+        // JavaScript例（背景・犬・障害物・当たり判定の統合）
+        const area = document.getElementById('game-demo-area');
         
+        // 犬の生成
+        const dog = document.createElement('img');
+        dog.src = 'images/dog.png';
+        dog.id = 'dog';
+        dog.style.position = 'absolute';
+        dog.style.left = '30px';
+        dog.style.bottom = '10px';
+        dog.style.width = '60px';
+        area.appendChild(dog);
+        
+        let isJumping = false;
+        let jumpHeight = 60;
+        let jumpSpeed = 4;
+        let dogBottom = 10;
+        
+        // ジャンプ処理
+        function jump() {
+            if (isJumping) return;
+            isJumping = true;
+            let upInterval = setInterval(() => {
+                if (dogBottom < jumpHeight) {
+                    dogBottom += jumpSpeed;
+                    dog.style.bottom = dogBottom + 'px';
+                } else {
+                    clearInterval(upInterval);
+                    let downInterval = setInterval(() => {
+                        if (dogBottom > 10) {
+                            dogBottom -= jumpSpeed;
+                            dog.style.bottom = dogBottom + 'px';
+                        } else {
+                            clearInterval(downInterval);
+                            isJumping = false;
+                        }
+                    }, 20);
+                }
+            }, 20);
+        }
+        
+        // キー操作イベント
+        document.addEventListener('keydown', function(e) {
+            if (e.code === 'ArrowUp' || e.code === 'Space') {
+                jump();
+            }
+            if (e.code === 'ArrowDown') {
+                dog.src = 'images/crouching_dog.png';
+            }
+        });
+        document.addEventListener('keyup', function(e) {
+            if (e.code === 'ArrowDown') {
+                dog.src = 'images/dog.png';
+            }
+        });
+        
+        // 障害物生成＆移動
+        function spawnObstacle() {
+            const isCactus = Math.random() < 0.5;
+            const obs = document.createElement('img');
+            obs.src = isCactus ? 'images/cactus.png' : 'images/arrow.png';
+            obs.className = isCactus ? 'cactus' : 'arrow';
+            obs.style.position = 'absolute';
+            obs.style.left = area.offsetWidth + 'px';
+            obs.style.width = '40px';
+            if (isCactus) {
+                obs.style.bottom = '0px';
+            } else {
+                const randTop = Math.floor(Math.random() * (area.offsetHeight - 40));
+                obs.style.top = randTop + 'px';
+            }
+            area.appendChild(obs);
+        
+            let pos = area.offsetWidth;
+            const speed = isCactus ? 4 : 6;
+            const move = setInterval(() => {
+                pos -= speed;
+                obs.style.left = pos + 'px';
+        
+                // 当たり判定
+                const dogRect = dog.getBoundingClientRect();
+                const obsRect = obs.getBoundingClientRect();
+                if (
+                    dogRect.left < obsRect.right &&
+                    dogRect.right > obsRect.left &&
+                    dogRect.top < obsRect.bottom &&
+                    dogRect.bottom > obsRect.top
+                ) {
+                    clearInterval(move);
+                    document.getElementById('gameover-message').style.display = 'block';
+                }
+        
+                if (pos < -40) {
+                    clearInterval(move);
+                    obs.remove();
+                }
+            }, 16);
+        }
+        
+        // 障害物をランダムな間隔で出現
+        function startGameObstacles() {
+            function loop() {
+                if (document.getElementById('gameover-message').style.display === 'block') return;
+                spawnObstacle();
+                const next = Math.random() * 1000 + 1000;
+                setTimeout(loop, next);
+            }
+            loop();
+        }
+        
+        // ページ読み込み後に開始
+        window.addEventListener('DOMContentLoaded', startGameObstacles);
+                </code></pre>
+            </div>
+            <p>
+                <strong>ポイント:</strong><br>
+            <ul>
+                <li>背景（地面）も含めて統合しています。</li>
+                <li>犬と障害物の位置情報（getBoundingClientRect）を使って当たり判定を行います。</li>
+                <li>ぶつかったら「GAME OVER」を表示し、障害物の出現を停止します。</li>
+                <li>障害物はサボテン（下から）と矢（ランダムな高さ）がランダムな間隔で出現します。</li>
+            </ul>
+            </p>
+        </section>
+
+        <section id="gameover-restart-section" class="content-section">
+            <h2 class="section-title">GAME OVER後のリスタート・スコア・細かい調整</h2>
+            <p>
+                このセクションでは、<strong>GAME
+                    OVER時のリスタートボタン</strong>の配置、<strong>右上にスコア表示</strong>、<strong>犬のジャンプ力と滞空時間の調整</strong>など、ゲーム体験を向上させる細かい調整を行います。
+            </p>
+            <div id="game-demo-area-2"
+                style="position:relative; width:400px; height:150px; border:2px solid #E53935; background:#fff3e0; margin:20px auto; overflow:hidden;">
+                <!-- 背景 -->
+                <div
+                    style="position:absolute; bottom:0; left:0; width:100%; height:20px; background:repeating-linear-gradient(-45deg,#607D8B,#607D8B 10px,#78909C 10px,#78909C 20px);">
+                </div>
+                <!-- スコア表示 -->
+                <div id="score-display"
+                    style="position:absolute; top:10px; right:20px; font-size:1.2em; color:#222; font-family:'Press Start 2P',monospace;">
+                    SCORE: 0
+                </div>
+                <!-- 犬と障害物はJavaScriptで追加 -->
+                <div id="gameover-message-2"
+                    style="display:none; position:absolute; top:40px; left:0; width:100%; text-align:center; font-size:2em; color:#E53935; font-weight:bold;">
+                    GAME OVER
+                    <br>
+                    <button id="restart-btn"
+                        style="margin-top:8px; padding:4px 12px; background:#fff; border:2px solid #43A047; border-radius:6px; cursor:pointer; box-shadow:0 2px 6px rgba(67,160,71,0.10); position:relative; top:-8px;">
+                        <span style="font-size:1.2em; color:#43A047; vertical-align:middle;">&#x21bb;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="code-example">
+                <pre><code>
+        // JavaScript例（リスタート・スコア・ジャンプ調整）
+        const area = document.getElementById('game-demo-area-2');
+        const scoreDisplay = document.getElementById('score-display');
+        const gameoverMsg = document.getElementById('gameover-message-2');
+        const restartBtn = document.getElementById('restart-btn');
+        
+        // 犬の生成
+        const dog = document.createElement('img');
+        dog.src = 'images/dog.png';
+        dog.id = 'dog';
+        dog.style.position = 'absolute';
+        dog.style.left = '30px';
+        dog.style.bottom = '10px';
+        dog.style.width = '60px';
+        area.appendChild(dog);
+        
+        let isJumping = false;
+        let jumpHeight = 100; // ジャンプ力UP
+        let jumpSpeed = 6;    // ジャンプ速度UP
+        let dogBottom = 10;
+        let score = 0;
+        let gameOver = false;
+        
+        // ジャンプ処理（滞空時間延長）
+        function jump() {
+            if (isJumping) return;
+            isJumping = true;
+            let upInterval = setInterval(() => {
+                if (dogBottom < jumpHeight) {
+                    dogBottom += jumpSpeed;
+                    dog.style.bottom = dogBottom + 'px';
+                } else {
+                    clearInterval(upInterval);
+                    let airTime = 20; // 滞空時間（ms単位で調整）
+                    setTimeout(() => {
+                        let downInterval = setInterval(() => {
+                            if (dogBottom > 10) {
+                                dogBottom -= jumpSpeed;
+                                dog.style.bottom = dogBottom + 'px';
+                            } else {
+                                clearInterval(downInterval);
+                                isJumping = false;
+                            }
+                        }, 20);
+                    }, airTime * 5); // 滞空時間を長めに
+                }
+            }, 20);
+        }
+        
+        // キー操作イベント
+        document.addEventListener('keydown', function(e) {
+            if (gameOver) return;
+            if (e.code === 'ArrowUp' || e.code === 'Space') {
+                jump();
+            }
+            if (e.code === 'ArrowDown') {
+                dog.src = 'images/crouching_dog.png';
+            }
+        });
+        document.addEventListener('keyup', function(e) {
+            if (e.code === 'ArrowDown') {
+                dog.src = 'images/dog.png';
+            }
+        });
+        
+        // 障害物生成＆移動
+        function spawnObstacle() {
+            const isCactus = Math.random() < 0.5;
+            const obs = document.createElement('img');
+            obs.src = isCactus ? 'images/cactus.png' : 'images/arrow.png';
+            obs.className = isCactus ? 'cactus' : 'arrow';
+            obs.style.position = 'absolute';
+            obs.style.left = area.offsetWidth + 'px';
+            obs.style.width = '40px';
+            if (isCactus) {
+                obs.style.bottom = '0px';
+            } else {
+                const randTop = Math.floor(Math.random() * (area.offsetHeight - 40));
+                obs.style.top = randTop + 'px';
+            }
+            area.appendChild(obs);
+        
+            let pos = area.offsetWidth;
+            const speed = isCactus ? 4 : 6;
+            const move = setInterval(() => {
+                if (gameOver) {
+                    clearInterval(move);
+                    obs.remove();
+                    return;
+                }
+                pos -= speed;
+                obs.style.left = pos + 'px';
+        
+                // 当たり判定
+                const dogRect = dog.getBoundingClientRect();
+                const obsRect = obs.getBoundingClientRect();
+                if (
+                    dogRect.left < obsRect.right &&
+                    dogRect.right > obsRect.left &&
+                    dogRect.top < obsRect.bottom &&
+                    dogRect.bottom > obsRect.top
+                ) {
+                    clearInterval(move);
+                    gameoverMsg.style.display = 'block';
+                    gameOver = true;
+                }
+        
+                if (pos < -40) {
+                    clearInterval(move);
+                    obs.remove();
+                    if (!gameOver) {
+                        score++;
+                        scoreDisplay.textContent = "SCORE: " + score;
+                    }
+                }
+            }, 16);
+        }
+        
+        // 障害物をランダムな間隔で出現
+        function startGameObstacles() {
+            function loop() {
+                if (gameOver) return;
+                spawnObstacle();
+                const next = Math.random() * 1000 + 1000;
+                setTimeout(loop, next);
+            }
+            loop();
+        }
+        
+        // リスタート処理
+        restartBtn.addEventListener('click', function() {
+            // 初期化
+            gameoverMsg.style.display = 'none';
+            score = 0;
+            scoreDisplay.textContent = "SCORE: 0";
+            gameOver = false;
+            dogBottom = 10;
+            dog.style.bottom = '10px';
+            dog.src = 'images/dog.png';
+            // 障害物を全て消す
+            Array.from(area.querySelectorAll('.cactus, .arrow')).forEach(e => e.remove());
+            startGameObstacles();
+        });
+        
+        // ページ読み込み後に開始
+        window.addEventListener('DOMContentLoaded', startGameObstacles);
+                </code></pre>
+            </div>
+            <p>
+                <strong>ポイント:</strong><br>
+            <ul>
+                <li>GAME OVER時にリスタートボタンが表示され、クリックでゲームが再開します。</li>
+                <li>スコアは右上に表示され、障害物を避けるごとに加算されます。</li>
+                <li>ジャンプ力と滞空時間を調整し、より遊びやすくしています。</li>
+                <li>忘れていた急降下要素を追加しました。</li>
+            </ul>
+            </p>
+        </section>
+
+        <section id="final_product" class="content-section game-section">
+            <h2 class="section-title">完成版 恐竜ゲーム</h2>
+            <p>
+                これまで作成した機能をすべて統合した完成版の恐竜ゲームです。<br>
+                ジャンプ・しゃがみ・障害物・スコア・リスタート・背景など、全ての要素が揃っています。<br>
+                ぜひプレイしてみてください！
+            </p>
+            <div id="final-game-area">
+                <div id="background-ground"></div>
+                <!-- 犬・障害物はJSで追加 -->
+                <div id="final-score-display">SCORE: 0</div>
+                <div id="final-gameover-message">
+                    GAME OVER
+                    <br>
+                    <button id="final-restart-btn">
+                        <span>&#x21bb;</span>
+                    </button>
+                </div>
+            </div>
+            <!-- CSSはmain.cssに移動済み -->
+            <p class="game-instruction">↑キーまたはスペースでジャンプ、↓キーでしゃがみ・急降下。障害物を避けてスコアを伸ばそう！</p>
+            <!-- JavaScriptはscript.jsに移動済み -->
+        </section>
+
     </main>
 
     <footer class="site-footer">

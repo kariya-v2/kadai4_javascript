@@ -1,3 +1,32 @@
+#background-area {
+    width: 400px;
+    height: 150px;
+    margin: 20px auto;
+    position: relative;
+    background: #fff3e0;
+    border: 2px solid #E53935;
+    overflow: hidden;
+}
+#background-ground {
+    width: 200%;
+    height: 20px;
+    background: repeating-linear-gradient(
+        -45deg,
+        #607D8B,
+        #607D8B 10px,
+        #78909C 10px,
+        #78909C 20px
+    );
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    animation: scrollGround 5s linear infinite;
+    z-index: 1;
+}
+@keyframes scrollGround {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
 /* 全体設定とフォントの指定 */
 body {
     font-family: 'Roboto', sans-serif;
@@ -99,21 +128,17 @@ body {
 
 /* 各コンテンツセクションの共通スタイル */
 .content-section {
-    background-color: #FFFFFF;
-    /* 白い背景 */
-    border-radius: 15px;
-    /* さらに丸みを帯びた角 */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    /* 強めの影 */
-    padding: 40px;
-    margin-bottom: 50px;
-    /* 各セクション間の余白 */
-    border: 3px solid #64B5F6;
-    /* やや明るい青のボーダー */
+    background: #fff; /* 白背景 */
+    border: 2px solid #64B5F6; /* 青色枠線 */
+    border-radius: 10px;
+    margin: 24px auto;
+    padding: 20px 16px;
+    box-sizing: border-box;
+    max-width: 700px;
+    box-shadow: 0 2px 8px rgba(230,57,53,0.08);
     position: relative;
     overflow: hidden;
     transition: transform 0.3s ease-in-out;
-    /* ホバーアニメーション */
 }
 
 .content-section:hover {
@@ -324,9 +349,6 @@ body {
 
 /* --- JavaScriptの基本構文セクション用スタイル --- */
 
-.syntax-section {
-    /* content-sectionのスタイルが継承されるため、特別な指定は少なめ */
-}
 
 .syntax-item {
     background-color: #F8F8F8;
@@ -385,10 +407,6 @@ body {
     padding: 0;
 }
 
-.code-example code {
-    /* シンタックスハイライトの色はここで指定するとより詳細に制御できますが、
-       今回はシンプルに背景色と文字色のみで対応します */
-}
 
 /* コード内のコメントの色 */
 .code-example code span.comment {
@@ -458,10 +476,8 @@ body {
     justify-content: center;
     min-height: 400px;
     /* ゲームセクションの最低高さを確保 */
-    background-color: #E0F7FA;
+    background-color: #ffffff;
     /* ゲームセクションの背景色を明るい青に */
-    border: 3px solid #00BCD4;
-    /* シアン系のボーダーで強調 */
 }
 
 .game-instruction {
@@ -496,13 +512,15 @@ body {
     /* 地面をゲームコンテナの2倍の幅にする（アニメーション用） */
     height: 20px;
     /* 地面の高さ */
-    background: repeating-linear-gradient(-45deg,
-            #607D8B,
-            /* 濃いグレー */
-            #607D8B 10px,
-            #78909C 10px,
-            /* 少し明るいグレー */
-            #78909C 20px);
+    background: repeating-linear-gradient(
+        -45deg,
+        #607D8B,
+        /* 濃いグレー */
+        #607D8B 10px,
+        #78909C 10px,
+        /* 少し明るいグレー */
+        #78909C 20px
+    );
     /* 地面にストライプ模様 */
     position: absolute;
     bottom: 0;
@@ -525,22 +543,50 @@ body {
     }
 }
 
-/* --- レスポンシブ対応の調整 --- */
-@media (max-width: 768px) {
-    #game-container {
-        width: 90%;
-        /* 小画面では幅を調整 */
-        height: 180px;
-    }
+/* --- index.htmlから移動 --- */
+#final-game-area {
+    width: 400px;
+    height: 150px;
+    margin: 20px auto;
+    position: relative;
+    background: #fff3e0;
+    border: 2px solid #E53935;
+    overflow: hidden;
 }
-
-@media (max-width: 480px) {
-    #game-container {
-        width: 95%;
-        height: 150px;
-    }
-
-    .game-instruction {
-        font-size: 0.95em;
-    }
+#final-score-display {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1.2em;
+    color: #222;
+    font-family: 'Press Start 2P', monospace;
+}
+#final-gameover-message {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 2em;
+    color: #E53935;
+    font-weight: bold;
+    z-index: 2;
+}
+#final-restart-btn {
+    margin-top: 8px;
+    padding: 4px 12px;
+    background: #fff;
+    border: 2px solid #43A047;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(67,160,71,0.10);
+    position: relative;
+    top: -8px;
+    z-index: 2;
+}
+#final-restart-btn span {
+    font-size: 1.2em;
+    color: #43A047;
+    vertical-align: middle;
 }
