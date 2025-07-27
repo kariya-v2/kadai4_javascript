@@ -128,8 +128,8 @@ body {
 
 /* 各コンテンツセクションの共通スタイル */
 .content-section {
-    background: #fff; /* 白背景 */
-    border: 2px solid #64B5F6; /* 青色枠線 */
+    background: #fff; /* 白背景に統一 */
+    border: 2px solid #64B5F6; /* 青枠線に統一 */
     border-radius: 10px;
     margin: 24px auto;
     padding: 20px 16px;
