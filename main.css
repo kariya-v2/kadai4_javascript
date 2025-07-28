@@ -1,5 +1,62 @@
+/* ゲームエリアの横幅・余白を他セクションと統一 */
+#background-area,
+#final-game-area,
+#game-demo-area,
+#game-demo-area-2,
+#dog-demo-area,
+#obstacle-demo-area {
+    width: 100%;
+    max-width: 700px;
+    margin: 20px auto;
+    box-sizing: border-box;
+    padding-left: 16px;
+    padding-right: 16px;
+    background: #fff3e0;
+    border: 2px solid #64B5F6;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(100,181,246,0.08);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+#background-area:hover,
+#final-game-area:hover,
+#game-demo-area:hover,
+#game-demo-area-2:hover,
+#dog-demo-area:hover,
+#obstacle-demo-area:hover {
+    transform: translateY(-8px);
+}
+
+@media (max-width: 768px) {
+  .content-section,
+  .toc-section {
+    max-width: 98vw;
+    margin: 16px auto;
+    padding: 12px 8vw;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(67,160,71,0.10);
+  }
+}
+
+@media (max-width: 480px) {
+  .content-section,
+  .toc-section {
+    max-width: 99vw;
+    margin: 8px auto;
+    padding: 8px 4vw;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(67,160,71,0.08);
+  }
+}
+
 #background-area {
-    width: 400px;
+    width: 100%;
+    max-width: 700px;
+    box-sizing: border-box;
+    padding-left: 16px;
+    padding-right: 16px;
     height: 150px;
     margin: 20px auto;
     position: relative;
@@ -292,58 +349,85 @@ body {
     margin: 5px 0;
 }
 
-/* レスポンシブ対応 */
-@media (max-width: 768px) {
-    .site-title {
-        font-size: 2em;
-        padding: 0 10px;
-    }
-
-    .site-tagline {
-        font-size: 1.1em;
-    }
-
-    .content-section {
-        padding: 25px;
-        margin-bottom: 35px;
-    }
-
-    .section-title {
-        font-size: 2em;
-    }
-
-    .intro-section p {
-        font-size: 1.05em;
-    }
-
-    .feature-grid {
-        grid-template-columns: 1fr;
-        /* 1列にする */
-    }
-
-    .feature-item h3::before {
-        display: block;
-        /* 小画面ではアイコンを独立させる */
-        margin-bottom: 5px;
-        margin-right: 0;
-    }
+/* 目次セクションのスタイル（他セクションと統一） */
+.toc-section {
+    background: #fff; /* 白背景で統一 */
+    border: 2px solid #64B5F6; /* 青枠線で統一 */
+    border-radius: 10px;
+    max-width: 700px;
+    margin: 32px auto 24px auto;
+    padding: 24px 20px;
+    box-shadow: 0 2px 8px rgba(100,181,246,0.08);
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-in-out;
 }
 
-@media (max-width: 480px) {
-    .site-title {
-        font-size: 1.6em;
-    }
+.toc-section:hover {
+    transform: translateY(-8px);
+    /* ホバーで浮き上がる効果（他セクションと統一） */
+}
 
-    .site-tagline {
-        font-size: 0.9em;
-    }
+.toc-title {
+    font-size: 1.4em;
+    color: #1976D2;
+    margin-bottom: 18px;
+    text-align: center;
+    font-weight: bold;
+}
 
-    .content-section {
-        padding: 20px;
-    }
+.toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-    .section-title {
-        font-size: 1.6em;
+.toc-list li {
+    margin: 10px 0;
+}
+
+.toc-list a {
+    color: #1976D2;
+    text-decoration: none;
+    font-size: 1.08em;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background 0.2s;
+    display: inline-block;
+}
+
+.toc-list a:hover {
+    background: #E3F2FD;
+}
+
+/* ゲームエリアの横幅・余白を他セクションと統一 */
+#background-area,
+#final-game-area,
+#game-demo-area,
+#game-demo-area-2,
+#dog-demo-area,
+#obstacle-demo-area {
+    width: 100%;
+    max-width: 700px;
+    margin: 20px auto;
+    box-sizing: border-box;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+/* 画面幅が小さい場合のレスポンシブ対応 */
+@media (max-width: 768px) {
+    #background-area,
+    #final-game-area,
+    #game-demo-area,
+    #game-demo-area-2,
+    #dog-demo-area,
+    #obstacle-demo-area {
+        max-width: 98vw;
+        padding-left: 8px;
+        padding-right: 8px;
     }
 }
 
@@ -450,6 +534,28 @@ body {
 }
 
 @media (max-width: 480px) {
+    #background-area,
+    #final-game-area,
+    #game-demo-area,
+    #game-demo-area-2,
+    #dog-demo-area,
+    #obstacle-demo-area {
+        padding-left: 2vw;
+        padding-right: 2vw;
+        border-radius: 6px;
+    }
+    .content-section {
+        padding-left: 2vw;
+        padding-right: 2vw;
+        border-radius: 6px;
+    }
+    .toc-section {
+        max-width: 700px;
+        margin: 24px auto 16px auto;
+        padding-left: 2vw;
+        padding-right: 2vw;
+        border-radius: 6px;
+    }
     .syntax-item {
         padding: 15px;
     }
@@ -545,13 +651,15 @@ body {
 
 /* --- index.htmlから移動 --- */
 #final-game-area {
-    width: 400px;
+    width: 100%;
+    max-width: 700px; /* .content-sectionと同じ最大幅 */
     height: 150px;
     margin: 20px auto;
     position: relative;
     background: #fff3e0;
     border: 2px solid #E53935;
     overflow: hidden;
+    box-sizing: border-box;
 }
 #final-score-display {
     position: absolute;
